@@ -100,47 +100,37 @@
         #infoScreen[hidden] {
             display: none;
         }
+
         .game-over {
             background: radial-gradient(circle, rgba(200, 0, 0, 0.9), #111);
             animation: pulse 1s infinite;
-
         }
-
 
         @keyframes pulse {
             0%,
             100% {
-
                 opacity: 1;
             }
-
             50% {
                 opacity: 0.8;
             }
-
         }
 
-
         @media (max-width: 768px) {
-
             body {
-
                 background-attachment: scroll;
             }
-
 
             button {
                 margin: 0.25rem;
             }
         }
-
     </style>
 </head>
 
 <body>
     <main id="container">
         <!-- Main Menu -->
-
         <section
             id="mainMenu"
             role="banner"
@@ -148,14 +138,12 @@
         >
             <h1>CIT 48500 - Escape Room</h1>
 
-
             <p id="demo"></p>
             <p>{{ ctf_end }}</p>
 
             <button
                 onclick="startGame()"
                 aria-label="Start the escape room game"
-
             >
                 START
             </button>
@@ -186,31 +174,44 @@
                     Solve puzzles to escape before time runs out!
                 </p>
 
+                <div
                     class="timer-container"
                     role="timer"
+                    aria-live="polite"
+                >
                     <h3>Countdown Timer (45:00)</h3>
 
                     <div
                         id="timer"
                         aria-label="Time remaining"
+                    >
+                        00:45:00.000
                     </div>
 
                     <div class="timer-controls">
+                        <button onclick="startTimer()" id="startBtn">
                             START TIMER
                         </button>
 
                         <button
+                            onclick="stopTimer()"
+                            id="pauseBtn"
                             disabled
                         >
                             PAUSE
+                        </button>
 
+                        <button onclick="resetTimer()" id="resetBtn">
                             RESET
+                        </button>
                     </div>
                 </div>
+            </div>
 
             <button
                 class="info-btn"
                 onclick="hideInfo()"
+                aria-label="Return to main menu"
             >
                 BACK
             </button>
@@ -258,50 +259,30 @@
             );
         }
 
-                aria-label="Return to main menu"
         function resumeTimer() {
             stopTimer();
 
-            </div>
             interval = setInterval(() => {
-                        </button>
-                        <button onclick="resetTimer()" id="resetBtn">
                 usedMs = Date.now() - startTimestamp;
                 updateDisplay();
-                        </button>
-                            id="pauseBtn"
                 saveTimerState();
-                            onclick="stopTimer()"
-                        <button onclick="startTimer()" id="startBtn">
-                        00:45:00.000
 
                 if (totalMs - usedMs <= 0) {
-                    >
-                >
                     document.body.classList.add("game-over");
                     localStorage.removeItem("escapeRoomTimer");
-                    aria-live="polite"
-                <div
-
 
                     document.querySelector("main").innerHTML = `
                         <h1 style="color:#ff4444;">GAME OVER</h1>
-
                         <h2 style="color:#ff6666;">Time Expired!</h2>
                         <button onclick="location.reload()">PLAY AGAIN</button>
-
                     `;
-
                 }
             }, 16);
-
         }
-
 
         function pad(num, digits = 2) {
             return num.toString().padStart(digits, "0");
         }
-
 
         function updateDisplay() {
             const remainingMs = totalMs - usedMs;
@@ -310,32 +291,25 @@
                 document.getElementById("timer").textContent =
                     "00:00:00.000";
                 return;
-
             }
-
 
             const hours = Math.floor(remainingMs / 3600000);
             const mins = Math.floor(
                 (remainingMs % 3600000) / 60000
-
             );
             const secs = Math.floor(
                 (remainingMs % 60000) / 1000
             );
-
             const ms = pad(remainingMs % 1000, 3);
-
 
             document.getElementById("timer").textContent = `${pad(
                 hours
             )}:${pad(mins)}:${pad(secs)}.${ms}`;
         }
 
-
         function startTimer() {
             totalMs = 45 * 60000;
             startTimestamp = Date.now();
-
             usedMs = 0;
 
             updateDisplay();
@@ -356,52 +330,33 @@
             toggleTimerButtons(false);
         }
 
-
         function toggleTimerButtons(running) {
             document.getElementById("startBtn").disabled = running;
-
             document.getElementById("pauseBtn").disabled = !running;
-
             document.getElementById("resetBtn").disabled = false;
-
         }
-
 
         loadTimerState();
 
-
         function startGame() {
-
             alert("Game starting! (Placeholder for full game)");
-
         }
 
         function showInfo() {
             document.getElementById("mainMenu").hidden = true;
-
             document.getElementById("infoScreen").hidden = false;
-
             document.body.style.backgroundImage = infoBackground;
             loadTimerState();
-
         }
-
 
         function hideInfo() {
             document.getElementById("infoScreen").hidden = true;
-
             document.getElementById("mainMenu").hidden = false;
-
             document.body.style.backgroundImage = originalBackground;
             document.body.classList.remove("game-over");
-
         }
-
 
         window.addEventListener("beforeunload", saveTimerState);
     </script>
-
 </body>
-
 </html>
-
