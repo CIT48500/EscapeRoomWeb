@@ -119,7 +119,7 @@ loadTimerState();
 
 function startGame() {
     window.open("http://localhost:8001/challenges#web-2", "_blank");
-}
+
 }
 
 function showInfo() {
