@@ -118,7 +118,7 @@ function toggleTimerButtons(running) {
 loadTimerState();
 
 function startGame() {
-    alert("Game starting! (Placeholder for full game)");
+    window.location.href = "http://elocalhost:8001/challenges#web-2";
 }
 
 function showInfo() {
