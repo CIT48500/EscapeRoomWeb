@@ -118,7 +118,7 @@ function toggleTimerButtons(running) {
 loadTimerState();
 
 function startGame() {
-    window.location.href = "http://localhost:8001/challenges#web-2";
+    window.open("http://localhost:8001/challenges#2web-2", "_blank");}
 }
 
 function showInfo() {
